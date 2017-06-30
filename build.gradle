@@ -1,0 +1,50 @@
+plugins {
+    id 'java'
+    id 'idea'
+    id "net.ltgt.apt" version "0.10"
+}
+
+apply from: "versions.gradle"
+
+ext.githubProjectName = rootProject.name
+
+
+repositories {
+  jcenter()
+  mavenLocal()
+  mavenCentral()
+  maven {
+    url "https://oss.sonatype.org/content/repositories/snapshots"
+  }
+  maven {
+    url "https://artifacts.elastic.co/maven"
+  }
+}
+
+group = "com.github.ssullivan.${githubProjectName}"
+version = '1.0.0-SNAPSHOT'
+sourceCompatibility = '1.8'
+targetCompatibility = '1.8'
+
+dependencies {
+    compileOnly "com.google.auto.value:auto-value:$autoValueVersion"
+    apt "com.google.auto.value:auto-value:$autoValueVersion"
+
+    compile 'com.google.code.findbugs:jsr305:2.0.3'
+    compile "com.fasterxml.jackson.dataformat:jackson-dataformat-yaml:$jacksonVersion"
+    compile "com.fasterxml.jackson.core:jackson-databind:$jacksonVersion"
+
+
+    // https://mvnrepository.com/artifact/junit/junit
+    testCompile group: 'junit', name: 'junit', version: "$junitVersion"
+    testCompile "com.google.guava:guava:$guavaVersion"
+    testCompileOnly "com.google.auto.value:auto-value:$autoValueVersion"
+    testApt "com.google.auto.value:auto-value:$autoValueVersion"
+}
+
+
+
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '4.0'
+}

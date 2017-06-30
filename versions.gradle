@@ -1,0 +1,8 @@
+ext {
+    junitVersion = '4.12'
+    mockitoVersion = '2.7.22'
+    jacksonVersion = '2.8.8'
+    slf4jVersion = '1.7.25'
+    autoValueVersion = '1.4.1'
+    guavaVersion = '21.0'
+}
