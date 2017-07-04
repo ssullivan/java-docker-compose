@@ -4,23 +4,30 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
+import com.google.common.collect.ImmutableMap;
 
-import java.util.Date;
+import javax.annotation.Nullable;
+
+import java.util.Map;
 
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
-/**
- * Created by catal on 6/29/2017.
- */
 @AutoValue
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
 public abstract class ComposeFile {
     @JsonProperty("version")
     public abstract String version();
 
+    @Nullable
+    @JsonProperty("services")
+    public abstract ImmutableMap<String, Service> services();
+
     @JsonCreator
-    static AutoValue_ComposeFile create(@JsonProperty("version") final String version) {
-        return new AutoValue_ComposeFile(version);
+    static ComposeFile create(@JsonProperty("version") final String version,
+                                        @JsonProperty("services") Map<String, Service> services) {
+        if (services != null)
+            return new AutoValue_ComposeFile(version, ImmutableMap.copyOf(services));
+        return new AutoValue_ComposeFile(version, null);
     }
 }

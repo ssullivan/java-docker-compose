@@ -7,21 +7,21 @@ import com.google.common.collect.ImmutableMap;
 
 import javax.annotation.Nullable;
 
+import java.util.Map;
+
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
-/**
- * Created by catal on 7/1/2017.
- */
 @AutoValue
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
 public abstract class Deploy {
 
-    @JsonProperty("mode")
+    @JsonProperty(value = "mode", defaultValue = "replicated")
     public abstract String mode();
 
-    @JsonProperty("replicas")
-    public abstract int replicas();
+    @Nullable
+    @JsonProperty(value = "replicas")
+    public abstract Integer replicas();
 
     @Nullable
     @JsonProperty("update_config")
@@ -32,8 +32,21 @@ public abstract class Deploy {
     public abstract Placement placement();
 
     @Nullable
+    @JsonProperty("resources")
+    public abstract Resources resources();
+
+    @Nullable
     @JsonProperty("labels")
     public abstract ImmutableMap<String, String> labels();
 
+    static Deploy create(@JsonProperty("mode") String mode,
+                         @JsonProperty("replicas") Integer replicas,
+                         @JsonProperty("update_config") UpdateConfig updateConfig,
+                         @JsonProperty("placement") Placement placement,
+                         @JsonProperty("resources") Resources resources,
+                         @JsonProperty("labels") Map<String, String> labels) {
+        return new AutoValue_Deploy(mode, replicas, updateConfig, placement, resources,
+                ImmutableMap.copyOf(labels));
+    }
 
 }

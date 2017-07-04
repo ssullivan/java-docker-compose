@@ -2,6 +2,7 @@ package com.github.ssullivan.jcompose;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLMapper;
+import com.fasterxml.jackson.datatype.guava.GuavaModule;
 import org.junit.Test;
 
 import java.io.IOException;
@@ -17,6 +18,7 @@ public class ComposeFileReaderTest {
     public void testReadVersion() throws IOException {
         YAMLMapper yamlMapper = new YAMLMapper();
         ObjectMapper objectMapper = new ObjectMapper(yamlMapper.getFactory());
+        objectMapper.registerModule(new GuavaModule());
         ComposeFile composeFile = objectMapper.readValue(fixture("fixtures/v3/docker-compose_versionOnly.yml"), ComposeFile.class);
 
         int k = 0;
