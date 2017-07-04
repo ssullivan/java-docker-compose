@@ -21,11 +21,11 @@ public abstract class ComposeFile {
 
     @Nullable
     @JsonProperty("services")
-    public abstract ImmutableMap<String, Service> services();
+    public abstract ImmutableMap<String, ServiceSpec> services();
 
     @JsonCreator
     static ComposeFile create(@JsonProperty("version") final String version,
-                                        @JsonProperty("services") Map<String, Service> services) {
+                                        @JsonProperty("services") Map<String, ServiceSpec> services) {
         if (services != null)
             return new AutoValue_ComposeFile(version, ImmutableMap.copyOf(services));
         return new AutoValue_ComposeFile(version, null);

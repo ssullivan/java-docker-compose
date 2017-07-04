@@ -5,6 +5,7 @@ import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
+import com.google.common.collect.ImmutableMap;
 
 import javax.annotation.Nullable;
 
@@ -15,7 +16,7 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
 @AutoValue
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
-public abstract class Service {
+public abstract class ServiceSpec {
 
     @JsonProperty("image")
     public abstract String image();
@@ -29,9 +30,14 @@ public abstract class Service {
     public abstract Deploy deploy();
 
     @JsonCreator
-    static Service create(@JsonProperty("image") String image,
-                          @JsonProperty("networks") List<String> networks,
-                          @JsonProperty("deply") Deploy deploy) {
-        return new AutoValue_Service(image, ImmutableList.copyOf(networks), deploy);
+    static ServiceSpec create(@JsonProperty("image") String image,
+                              @JsonProperty("networks") List<String> networks,
+                              @JsonProperty("deploy") Deploy deploy) {
+        ImmutableList<String> inetworks = null;
+        if (null != networks)
+            inetworks = ImmutableList.copyOf(networks);
+
+
+        return new AutoValue_ServiceSpec(image, inetworks, deploy);
     }
 }

@@ -5,6 +5,8 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableList;
 
+import java.util.List;
+
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.ANY;
 import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
@@ -13,4 +15,8 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 public abstract class Placement {
     @JsonProperty("constraints")
     public abstract ImmutableList<String> constraints();
+
+    static Placement create(@JsonProperty("constraints") List<String> constraints) {
+        return new AutoValue_Placement(ImmutableList.copyOf(constraints));
+    }
 }

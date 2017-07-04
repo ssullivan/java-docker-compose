@@ -11,12 +11,12 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 
 @AutoValue
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
-public abstract class ResourceLimits {
+public abstract class ResourceSpec {
     @Nullable
-    @JsonProperty("cpus")
-    public abstract Double cpus();
+    @JsonProperty("limits")
+    public abstract Resources limits();
 
     @Nullable
-    @JsonProperty("memory")
-    public abstract String memory();
+    @JsonProperty("reservations")
+    public abstract Resources reservations();
 }

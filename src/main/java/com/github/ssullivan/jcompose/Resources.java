@@ -1,6 +1,7 @@
 package com.github.ssullivan.jcompose;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
@@ -13,10 +14,15 @@ import static com.fasterxml.jackson.annotation.JsonAutoDetect.Visibility.NONE;
 @JsonAutoDetect(fieldVisibility = ANY, getterVisibility = NONE, setterVisibility = NONE)
 public abstract class Resources {
     @Nullable
-    @JsonProperty("limits")
-    public abstract ResourceLimits limits();
+    @JsonProperty("cpus")
+    public abstract Double cpus();
 
     @Nullable
-    @JsonProperty("reservations")
-    public abstract ResourceReservations reservations();
+    @JsonProperty("memory")
+    public abstract String memory();
+
+    @JsonCreator
+    static Resources create(@JsonProperty("cpus") Double cpus, @JsonProperty("memory") String memory) {
+        return new AutoValue_Resources(cpus, memory);
+    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 import com.google.common.collect.ImmutableMap;
+import com.sun.org.apache.bcel.internal.generic.IMUL;
 
 import javax.annotation.Nullable;
 
@@ -33,7 +34,7 @@ public abstract class Deploy {
 
     @Nullable
     @JsonProperty("resources")
-    public abstract Resources resources();
+    public abstract ResourceSpec resources();
 
     @Nullable
     @JsonProperty("labels")
@@ -43,10 +44,15 @@ public abstract class Deploy {
                          @JsonProperty("replicas") Integer replicas,
                          @JsonProperty("update_config") UpdateConfig updateConfig,
                          @JsonProperty("placement") Placement placement,
-                         @JsonProperty("resources") Resources resources,
+                         @JsonProperty("resources") ResourceSpec resources,
                          @JsonProperty("labels") Map<String, String> labels) {
+
+        ImmutableMap<String, String> ilabels = null;
+        if (null != labels)
+            ilabels = ImmutableMap.copyOf(labels);
+
         return new AutoValue_Deploy(mode, replicas, updateConfig, placement, resources,
-                ImmutableMap.copyOf(labels));
+                ilabels);
     }
 
 }
