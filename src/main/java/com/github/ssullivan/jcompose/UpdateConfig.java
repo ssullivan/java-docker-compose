@@ -1,6 +1,7 @@
 package com.github.ssullivan.jcompose;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
@@ -20,10 +21,19 @@ public abstract class UpdateConfig {
     @JsonProperty("delay")
     public abstract String delay();
 
+    @Nullable
     @JsonProperty(value = "failure_action", defaultValue = "pause")
     public abstract String failureAction();
 
+    @Nullable
     @JsonProperty(value = "monitor", defaultValue = "0s")
     public abstract String monitor();
 
+    @JsonCreator
+    static UpdateConfig create(@JsonProperty("parallelism") Integer parallelism,
+                               @JsonProperty("delay") String delay,
+                               @JsonProperty("failure_action") String failureAction,
+                               @JsonProperty("monitor") String monitor) {
+        return new AutoValue_UpdateConfig(parallelism, delay, failureAction, monitor);
+    }
 }
