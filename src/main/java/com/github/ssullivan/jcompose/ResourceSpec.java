@@ -19,4 +19,8 @@ public abstract class ResourceSpec {
     @Nullable
     @JsonProperty("reservations")
     public abstract Resources reservations();
+
+    static ResourceSpec create(@JsonProperty("limits") Resources limits, @JsonProperty("reservations") Resources reservations) {
+        return new AutoValue_ResourceSpec(limits, reservations);
+    }
 }
