@@ -55,6 +55,12 @@ public class ComposeFileReaderTest {
         assertThat(fooDeploy.labels(), notNullValue());
         assertThat(fooDeploy.labels().get("foo"), equalTo("bar"));
 
+        assertThat(fooDeploy.resources().limits().cpus(), allOf(greaterThan(0.0), lessThanOrEqualTo(0.001)));
+        assertThat(fooDeploy.resources().limits().memory(), equalTo("50M"));
+
+        assertThat(fooDeploy.resources().reservations().cpus(), allOf(greaterThan(0.0), lessThanOrEqualTo( 0.00001)));
+        assertThat(fooDeploy.resources().reservations().memory(), equalTo("20M"));
+
         final ServiceSpec bar = composeFile.services().get("bar");
         assertThat(bar.deploy().mode(), equalTo("global"));
         assertThat(bar.image(), equalTo("tomcat"));

@@ -15,6 +15,13 @@ services:
           - node.role == database
       labels:
         foo: bar
+      resources:
+        limits:
+          cpus: '0.001'
+          memory: 50M
+        reservations:
+          cpus: '0.00001'
+          memory: 20M
     networks:
       - frontend
       - backend

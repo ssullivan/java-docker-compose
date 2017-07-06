@@ -1,6 +1,7 @@
 package com.github.ssullivan.jcompose;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
+import com.fasterxml.jackson.annotation.JsonCreator;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import com.google.auto.value.AutoValue;
 
@@ -20,6 +21,7 @@ public abstract class ResourceSpec {
     @JsonProperty("reservations")
     public abstract Resources reservations();
 
+    @JsonCreator
     static ResourceSpec create(@JsonProperty("limits") Resources limits, @JsonProperty("reservations") Resources reservations) {
         return new AutoValue_ResourceSpec(limits, reservations);
     }
