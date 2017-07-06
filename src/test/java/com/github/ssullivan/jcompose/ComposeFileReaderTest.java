@@ -1,5 +1,6 @@
 package com.github.ssullivan.jcompose;
 
+import com.google.common.util.concurrent.Futures;
 import org.hamcrest.Matcher;
 import org.hamcrest.Matchers;
 
@@ -32,5 +33,28 @@ public class ComposeFileReaderTest {
         assertThat(composeFile.version(), equalTo("3"));
 
         assertThat(composeFile.services(), notNullValue());
+        assertThat(composeFile.services().keySet(), contains("foo", "bar"));
+
+        final ServiceSpec foo = composeFile.services().get("foo");
+
+        assertThat(foo.image(), equalTo("redis"));
+        assertThat(foo.deploy(), notNullValue());
+
+        final Deploy fooDeploy = foo.deploy();
+        assertThat(fooDeploy.replicas(), equalTo(1));
+        assertThat(fooDeploy.updateConfig(), notNullValue());
+        assertThat(fooDeploy.updateConfig().parallelism(), equalTo(2));
+        assertThat(fooDeploy.updateConfig().delay(), equalTo("10s"));
+
+        assertThat(fooDeploy.restartPolicy(), notNullValue());
+        assertThat(fooDeploy.restartPolicy().condition(), equalTo("on-failure"));
+
+        assertThat(foo.networks(), contains("frontend", "backend"));
+        assertThat(composeFile.services(), notNullValue());
+
+        final ServiceSpec bar = composeFile.services().get("bar");
+        assertThat(bar.image(), equalTo("tomcat"));
+        assertThat(bar.deploy().replicas(), equalTo(6));
+        assertThat(bar.networks(), contains("frontend", "backend"));
     }
 }
