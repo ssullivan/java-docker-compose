@@ -49,6 +49,12 @@ public class ComposeFileReaderTest {
         assertThat(foo.networks(), contains("frontend", "backend"));
         assertThat(composeFile.services(), notNullValue());
 
+        assertThat(fooDeploy.placement(), notNullValue());
+        assertThat(fooDeploy.placement().constraints(), contains("node.role == database"));
+
+        assertThat(fooDeploy.labels(), notNullValue());
+        assertThat(fooDeploy.labels().get("foo"), equalTo("bar"));
+
         final ServiceSpec bar = composeFile.services().get("bar");
         assertThat(bar.deploy().mode(), equalTo("global"));
         assertThat(bar.image(), equalTo("tomcat"));

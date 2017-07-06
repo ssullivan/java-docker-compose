@@ -10,6 +10,11 @@ services:
         delay: 10s
       restart_policy:
         condition: on-failure
+      placement:
+        constraints:
+          - node.role == database
+      labels:
+        foo: bar
     networks:
       - frontend
       - backend
