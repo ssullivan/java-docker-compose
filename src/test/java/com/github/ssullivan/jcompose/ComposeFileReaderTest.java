@@ -1,10 +1,5 @@
 package com.github.ssullivan.jcompose;
 
-import com.google.common.util.concurrent.Futures;
-import org.hamcrest.Matcher;
-import org.hamcrest.Matchers;
-
-import org.junit.Assert;
 import org.junit.Test;
 
 import java.io.IOException;
