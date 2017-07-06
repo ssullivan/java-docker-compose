@@ -2,6 +2,8 @@ plugins {
     id 'java'
     id 'idea'
     id "net.ltgt.apt" version "0.10"
+    id 'maven'
+    id 'jacoco'
 }
 
 apply from: "versions.gradle"
@@ -10,14 +12,11 @@ ext.githubProjectName = rootProject.name
 
 
 repositories {
-  jcenter()
   mavenLocal()
   mavenCentral()
+  jcenter()
   maven {
     url "https://oss.sonatype.org/content/repositories/snapshots"
-  }
-  maven {
-    url "https://artifacts.elastic.co/maven"
   }
 }
 
@@ -45,7 +44,20 @@ dependencies {
 }
 
 
+task codeCoverageReport(type: JacocoReport) {
+    executionData fileTree(project.rootDir.absolutePath).include("**/build/jacoco/*.exec")
 
+    subprojects.each {
+        sourceSets it.sourceSets.main
+    }
+
+    reports {
+        xml.enabled true
+        xml.destination "${buildDir}/reports/jacoco/report.xml"
+        html.enabled false
+        csv.enabled false
+    }
+}
 
 task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
