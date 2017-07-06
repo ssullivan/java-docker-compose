@@ -13,9 +13,6 @@ import static com.github.ssullivan.jcompose.FixtureUtil.fixture;
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.*;
 
-/**
- * Created by catal on 6/29/2017.
- */
 public class ComposeFileReaderTest {
     @Test
     public void testReadVersionOnly() throws IOException {
@@ -53,6 +50,7 @@ public class ComposeFileReaderTest {
         assertThat(composeFile.services(), notNullValue());
 
         final ServiceSpec bar = composeFile.services().get("bar");
+        assertThat(bar.deploy().mode(), equalTo("global"));
         assertThat(bar.image(), equalTo("tomcat"));
         assertThat(bar.deploy().replicas(), equalTo(6));
         assertThat(bar.networks(), contains("frontend", "backend"));

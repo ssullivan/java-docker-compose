@@ -64,3 +64,6 @@ task codeCoverageReport(type: JacocoReport) {
 task wrapper(type: Wrapper) {
     gradleVersion = '4.0'
 }
+
+// TODO: https://github.com/bmuschko/gradle-nexus-plugin
+// TODO: https://github.com/Codearte/gradle-nexus-staging-plugin

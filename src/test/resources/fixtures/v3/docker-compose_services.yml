@@ -16,6 +16,7 @@ services:
   bar:
     image: tomcat
     deploy:
+      mode: global
       replicas: 6
     networks:
       - frontend
