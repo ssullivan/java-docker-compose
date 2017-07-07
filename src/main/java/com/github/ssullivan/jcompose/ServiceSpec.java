@@ -29,19 +29,19 @@ public abstract class ServiceSpec {
 
     @Nullable
     @JsonProperty("ports")
-    public abstract ImmutableList<PortTarget> ports();
+    public abstract ImmutableList<PortConfig> ports();
 
     @JsonCreator
     static ServiceSpec create(@JsonProperty("image") String image,
                               @JsonProperty("networks") List<String> networks,
                               @JsonProperty("deploy") Deploy deploy,
-                              @JsonProperty("ports") List<PortTarget> portTargets) {
+                              @JsonProperty("ports") List<PortConfig> portTargets) {
         ImmutableList<String> inetworks = null;
         if (null != networks)
             inetworks = ImmutableList.copyOf(networks);
 
 
-        ImmutableList<PortTarget> iportTargets = null;
+        ImmutableList<PortConfig> iportTargets = null;
         if (null != portTargets)
             portTargets = ImmutableList.copyOf(portTargets);
 

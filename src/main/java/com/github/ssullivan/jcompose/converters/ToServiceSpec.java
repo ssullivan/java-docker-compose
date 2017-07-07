@@ -3,6 +3,7 @@ package com.github.ssullivan.jcompose.converters;
 import com.github.ssullivan.jcompose.ServiceSpec;
 import com.google.common.collect.ImmutableList;
 import com.spotify.docker.client.messages.swarm.EndpointSpec;
+import com.spotify.docker.client.messages.swarm.PortConfig;
 import com.spotify.docker.client.messages.swarm.ServiceMode;
 
 import java.util.List;
