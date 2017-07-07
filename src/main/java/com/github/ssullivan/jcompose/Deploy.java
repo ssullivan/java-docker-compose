@@ -22,7 +22,7 @@ public abstract class Deploy {
 
     @Nullable
     @JsonProperty(value = "replicas")
-    public abstract Integer replicas();
+    public abstract Long replicas();
 
     @Nullable
     @JsonProperty("update_config")
@@ -46,7 +46,7 @@ public abstract class Deploy {
 
     @JsonCreator
     static Deploy create(@JsonProperty(value = "mode", defaultValue = "replicated") String mode,
-                         @JsonProperty("replicas") Integer replicas,
+                         @JsonProperty("replicas") Long replicas,
                          @JsonProperty("update_config") UpdateConfig updateConfig,
                          @JsonProperty("placement") Placement placement,
                          @JsonProperty("resources") ResourceSpec resources,

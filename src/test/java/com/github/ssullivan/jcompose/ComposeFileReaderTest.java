@@ -10,7 +10,7 @@ import static org.hamcrest.Matchers.*;
 
 public class ComposeFileReaderTest {
     @Test
-    public void testReadVersionOnly() throws IOException {
+    public void testReadVersionOnly_version3() throws IOException {
         ComposeFileReader reader = new ComposeFileReader();
         ComposeFile composeFile = reader.read(fixture("fixtures/v3/docker-compose_versionOnly.yml"));
         assertThat(composeFile, notNullValue());
@@ -18,7 +18,15 @@ public class ComposeFileReaderTest {
     }
 
     @Test
-    public void testReadServices() throws IOException {
+    public void testReadPorts_version3_2() throws Exception {
+        ComposeFileReader reader = new ComposeFileReader();
+        ComposeFile composeFile = reader.read(fixture("fixtures/3.2/docker-compose_portTargets.yml"));
+        assertThat(composeFile, notNullValue());
+        assertThat(composeFile.version(), equalTo("3.2"));
+    }
+
+    @Test
+    public void testReadServices_version3() throws IOException {
         ComposeFileReader reader = new ComposeFileReader();
         ComposeFile composeFile = reader.read(fixture("fixtures/v3/docker-compose_services.yml"));
         assertThat(composeFile, notNullValue());
@@ -33,7 +41,7 @@ public class ComposeFileReaderTest {
         assertThat(foo.deploy(), notNullValue());
 
         final Deploy fooDeploy = foo.deploy();
-        assertThat(fooDeploy.replicas(), equalTo(1));
+        assertThat(fooDeploy.replicas(), equalTo(1L));
         assertThat(fooDeploy.updateConfig(), notNullValue());
         assertThat(fooDeploy.updateConfig().parallelism(), equalTo(2));
         assertThat(fooDeploy.updateConfig().delay(), equalTo("10s"));
@@ -59,7 +67,7 @@ public class ComposeFileReaderTest {
         final ServiceSpec bar = composeFile.services().get("bar");
         assertThat(bar.deploy().mode(), equalTo("global"));
         assertThat(bar.image(), equalTo("tomcat"));
-        assertThat(bar.deploy().replicas(), equalTo(6));
+        assertThat(bar.deploy().replicas(), equalTo(6L));
         assertThat(bar.networks(), contains("frontend", "backend"));
     }
 }

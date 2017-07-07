@@ -27,15 +27,24 @@ public abstract class ServiceSpec {
     @JsonProperty("deploy")
     public abstract Deploy deploy();
 
+    @Nullable
+    @JsonProperty("ports")
+    public abstract ImmutableList<PortConfig> ports();
+
     @JsonCreator
     static ServiceSpec create(@JsonProperty("image") String image,
                               @JsonProperty("networks") List<String> networks,
-                              @JsonProperty("deploy") Deploy deploy) {
+                              @JsonProperty("deploy") Deploy deploy,
+                              @JsonProperty("ports") List<PortConfig> portTargets) {
         ImmutableList<String> inetworks = null;
         if (null != networks)
             inetworks = ImmutableList.copyOf(networks);
 
 
-        return new AutoValue_ServiceSpec(image, inetworks, deploy);
+        ImmutableList<PortConfig> iportTargets = null;
+        if (null != portTargets)
+            portTargets = ImmutableList.copyOf(portTargets);
+
+        return new AutoValue_ServiceSpec(image, inetworks, deploy, iportTargets);
     }
 }
