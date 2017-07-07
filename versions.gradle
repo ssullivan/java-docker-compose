@@ -5,4 +5,6 @@ ext {
     slf4jVersion = '1.7.25'
     autoValueVersion = '1.4.1'
     guavaVersion = '21.0'
+    spotifyDockerClientVersion = '8.8.0'
+    findbugsVersion = '2.0.3'
 }

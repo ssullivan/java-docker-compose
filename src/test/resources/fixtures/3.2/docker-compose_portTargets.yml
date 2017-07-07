@@ -1,0 +1,44 @@
+---
+version: "3.2"
+services:
+  foo:
+    image: redis
+    ports:
+      - target: 6379
+        published: 6380
+        protocol: tcp
+        mode: ingress
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 2
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      placement:
+        constraints:
+          - node.role == database
+      labels:
+        foo: bar
+      resources:
+        limits:
+          cpus: '0.001'
+          memory: 50M
+        reservations:
+          cpus: '0.00001'
+          memory: 20M
+    networks:
+      - frontend
+      - backend
+  bar:
+    image: tomcat
+    ports:
+      - "8080:80/tcp"
+      - "8443:443/tcp"
+    deploy:
+      mode: global
+      replicas: 6
+    networks:
+      - frontend
+      - backend
+
